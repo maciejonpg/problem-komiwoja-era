@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& os, const CostMatrix& cm) {
     return os;
 }
 
-/* PART 1 */
+/* PART 1 - ZROBIONE!*/
 
 
 /**
@@ -36,7 +36,7 @@ std::vector<cost_t> CostMatrix::get_min_values_in_rows() const {
         }
         min_value.push_back(min);
      }
-     return min_value
+     return min_value;
     // TODO: Implement it!
 }
 
@@ -50,10 +50,10 @@ cost_t CostMatrix::reduce_rows() {
     for (int i=0; i<matrix_.size(); i++){
         for(int j=0; j<matrix_[0].size(); j++){
             if(matrix_[i][j]!=INF){
-                matrix_[i][j]-=min_v[i]
+                matrix_[i][j]-=min_v[i];
             }
         }
-        LB_row+=min_v(i);
+        LB_row+=min_v[i];
     }
     return LB_row;
      // TODO: Implement it!
@@ -65,7 +65,7 @@ cost_t CostMatrix::reduce_rows() {
  */
 std::vector<cost_t> CostMatrix::get_min_values_in_cols() const {
     std::vector<cost_t> min_value= {};
-     for(i=0; i<matrix_[0].size();i++){
+     for(int i=0; i<matrix_[0].size();i++){
         cost_t min = INF;
         for(int j=0; j<matrix_.size();j++){
             if(matrix_[i][j]<min){
@@ -91,10 +91,10 @@ cost_t CostMatrix::reduce_cols() {
     for (int j = 0; j < matrix_[0].size(); j++) {
         for (int i = 0; i < matrix_.size(); i++) {
             if (matrix_[i][j] != INF) {
-                matrix_[i][j] -= min_vector[j];
+                matrix_[i][j] -= min_v[j];
             }
         }
-        LB_col+=min_v[j]
+        LB_col+=min_v[j];
     }
     return LB_col;  // TODO: Implement it!
 }
@@ -117,7 +117,7 @@ cost_t CostMatrix::get_vertex_cost(std::size_t row, std::size_t col) const {
     }
     for (int i=0; i<matrix_.size();i++ ){
         if (i !=row){
-            if(matrix[i][col]<min_col){
+            if(matrix_[i][col]<min_col){
                 min_col=matrix_[i][col];
             }
         }
@@ -145,7 +145,8 @@ path_t StageState::get_path() {
  * @return The coordinates of the next vertex.
  */
 NewVertex StageState::choose_new_vertex() {
-    throw;  // TODO: Implement it!
+    
+    // TODO: Implement it!
 }
 
 /**
@@ -153,6 +154,7 @@ NewVertex StageState::choose_new_vertex() {
  * @param new_vertex
  */
 void StageState::update_cost_matrix(vertex_t new_vertex) {
+
     throw;  // TODO: Implement it!
 }
 
@@ -161,7 +163,13 @@ void StageState::update_cost_matrix(vertex_t new_vertex) {
  * @return The sum of reduced values.
  */
 cost_t StageState::reduce_cost_matrix() {
-    throw;  // TODO: Implement it!
+    cost_t LB=0;
+    CostMatrix matrix;
+    cost_t row=matrix.reduce_rows();
+    cost_t col=matrix.reduce_cols();
+    LB=row+col;
+    return LB;
+      // TODO: Implement it!
 }
 
 /**
