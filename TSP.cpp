@@ -145,7 +145,22 @@ path_t StageState::get_path() {
  * @return The coordinates of the next vertex.
  */
 NewVertex StageState::choose_new_vertex() {
-    
+    cost_t max=0;
+    vertex_t vertex;
+    for (int i=0; i<matrix_.size(); i++) {
+        for (int j=0; j<matrix_[0].size(); j++) {
+            if (matrix_[i][j]==0) {
+                cost_t cost=matrix_.get_vertex_cost(i, j);
+                if (cost>max) {
+                    max=cost;
+                    vertex.row=i;
+                    vertex.col=j;
+                }
+            }
+        }
+    }
+    return NewVertex(vertex,max);
+
     // TODO: Implement it!
 }
 
@@ -154,8 +169,15 @@ NewVertex StageState::choose_new_vertex() {
  * @param new_vertex
  */
 void StageState::update_cost_matrix(vertex_t new_vertex) {
-
-    throw;  // TODO: Implement it!
+    for (int i=0; i<matrix_.size(); i++) {
+        for (int j=0; j<matrix_[0].size(); j++) {
+            if (new_vertex.row==i or new_vertex.col==j) {
+                matrix_[i][j]=INF;
+            }
+        }
+    }
+    matrix_[new_vertex.col][new_vertex.row]=INF;
+    return; // TODO: Implement it!
 }
 
 /**
